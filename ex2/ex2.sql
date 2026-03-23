@@ -15,11 +15,11 @@ ORDER BY price ASC
 LIMIT 1;
 
 -- 2.2 Prix moyen des produits par catégorie (nom catégorie + prix moyen arrondi à 2 décimales)
-SELECT c.name AS categorie, ROUND(AVG(p.price), 2) AS prix_moyen
+SELECT c.name AS category, ROUND(AVG(p.price), 2) AS average_price
 FROM products p
 JOIN categories c ON p.category_id = c.id
 GROUP BY c.id, c.name
-ORDER BY prix_moyen DESC;
+ORDER BY average_price DESC;
 
 -- 2.3 Utilisateurs dont le prénom commence par "A" ou "E"
 SELECT first_name, last_name, email
@@ -28,10 +28,10 @@ WHERE first_name LIKE 'A%'
    OR first_name LIKE 'E%';
 
 -- 2.4 Nombre de commandes par statut
-SELECT status, COUNT(*) AS nombre_commandes
+SELECT status, COUNT(*) AS order_count
 FROM orders
 GROUP BY status
-ORDER BY nombre_commandes DESC;
+ORDER BY order_count DESC;
 
 -- 2.5 Utilisateurs inscrits entre le 1er mars et le 31 mai 2024
 SELECT first_name, last_name, email, created_at
