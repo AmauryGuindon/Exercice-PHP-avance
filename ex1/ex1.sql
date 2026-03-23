@@ -26,5 +26,5 @@ WHERE city = 'Paris';
 -- 1.5 Produits créés en 2024 après le mois de mars (avril et après)
 SELECT name, created_at
 FROM products
-WHERE YEAR(created_at) = 2024
-  AND MONTH(created_at) >= 4;
+WHERE created_at >= '2024-04-01'
+  AND created_at < '2025-01-01';
