@@ -42,7 +42,7 @@ class UserModel
     }
 
     // Connexion sécurisée — retourne les données utilisateur (sans mot de passe) ou false
-    public function authenticate(string $email, string $password): array|false
+    public function authenticate(string $email, string $password)
     {
         $stmt = $this->pdo->prepare(
             'SELECT id, first_name, last_name, email, password, role, city, country, is_active
@@ -61,7 +61,7 @@ class UserModel
     }
 
     // Profil utilisateur avec statistiques (nb commandes, montant total, nb avis)
-    public function getProfile(int $userId): array|false
+    public function getProfile(int $userId)
     {
         $stmt = $this->pdo->prepare(
             'SELECT u.id, u.first_name, u.last_name, u.email, u.role, u.city, u.country,

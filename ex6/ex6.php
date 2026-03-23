@@ -86,7 +86,7 @@ function createOrder(int $userId, array $items): int
 
 // 6.2 Authentifie un utilisateur par email + mot de passe
 // Retourne les infos (sans le mot de passe) ou false
-function authenticateUser(string $email, string $password): array|false
+function authenticateUser(string $email, string $password)
 {
     $pdo = Database::getInstance()->getConnection();
     $stmt = $pdo->prepare(

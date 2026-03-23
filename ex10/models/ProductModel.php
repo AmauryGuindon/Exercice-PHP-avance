@@ -33,7 +33,7 @@ class ProductModel
     }
 
     // Détail d'un produit avec catégorie, note moyenne et tags
-    public function getById(int $id): array|false
+    public function getById(int $id)
     {
         $stmt = $this->pdo->prepare(
             'SELECT p.id, p.name, p.description, p.price, p.stock,
@@ -60,15 +60,17 @@ class ProductModel
              FROM products p
              JOIN categories c ON p.category_id = c.id
              WHERE p.is_available = 1
-               AND (p.name LIKE :keyword OR p.description LIKE :keyword)
+               AND (p.name LIKE :keyword_name OR p.description LIKE :keyword_desc)
                AND p.price >= :min_price
                AND p.price <= :max_price
              ORDER BY p.price'
         );
+        $pattern = '%' . $keyword . '%';
         $stmt->execute([
-            ':keyword'   => '%' . $keyword . '%',
-            ':min_price' => $minPrice,
-            ':max_price' => $maxPrice,
+            ':keyword_name' => $pattern,
+            ':keyword_desc' => $pattern,
+            ':min_price'    => $minPrice,
+            ':max_price'    => $maxPrice,
         ]);
         return $stmt->fetchAll();
     }

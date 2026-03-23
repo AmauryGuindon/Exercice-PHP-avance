@@ -47,7 +47,7 @@ function getAllProducts(): array
 }
 
 // 4.3 Retourne un produit par son ID avec sa catégorie et sa note moyenne
-function getProductById(int $id): array|false
+function getProductById(int $id)
 {
     $pdo = Database::getInstance()->getConnection();
     $stmt = $pdo->prepare(
