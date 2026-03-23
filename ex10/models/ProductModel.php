@@ -38,8 +38,8 @@ class ProductModel
         $stmt = $this->pdo->prepare(
             'SELECT p.id, p.name, p.description, p.price, p.stock,
                     c.name AS category,
-                    ROUND(AVG(r.rating), 2) AS average_rating,
-                    GROUP_CONCAT(t.name ORDER BY t.name SEPARATOR ", ") AS tags
+                    ROUND(AVG(DISTINCT r.rating), 2) AS average_rating,
+                    GROUP_CONCAT(DISTINCT t.name ORDER BY t.name SEPARATOR ", ") AS tags
              FROM products p
              JOIN categories c ON p.category_id = c.id
              LEFT JOIN reviews r ON p.id = r.product_id
