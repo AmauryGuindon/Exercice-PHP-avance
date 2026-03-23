@@ -97,10 +97,11 @@ function searchProducts(string $keyword): array
         'SELECT p.id, p.name, p.description, p.price, c.name AS category
          FROM products p
          JOIN categories c ON p.category_id = c.id
-         WHERE p.name LIKE :keyword
-            OR p.description LIKE :keyword
+         WHERE p.name LIKE :keyword_name
+            OR p.description LIKE :keyword_desc
          ORDER BY p.name'
     );
-    $stmt->execute([':keyword' => '%' . $keyword . '%']);
+    $pattern = '%' . $keyword . '%';
+    $stmt->execute([':keyword_name' => $pattern, ':keyword_desc' => $pattern]);
     return $stmt->fetchAll();
 }

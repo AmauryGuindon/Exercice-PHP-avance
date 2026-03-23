@@ -76,6 +76,10 @@ try {
     echo 'Erreur : ' . $e->getMessage() . "\n";
 }
 
-section('UserModel::authenticate (email/password invalides)');
+section('UserModel::authenticate (email/password invalides — doit échouer)');
 $auth = $userModel->authenticate('bob.dupont@email.com', 'mauvaismdp');
 echo 'Résultat : ' . ($auth ? 'Connecté' : 'Échec (attendu)') . "\n";
+
+section('UserModel::authenticate (utilisateur inactif — doit échouer)');
+$authInactive = $userModel->authenticate('laura.fontaine@email.com', 'password123');
+echo 'Résultat : ' . ($authInactive ? 'Connecté' : 'Échec (attendu — compte inactif)') . "\n";

@@ -37,7 +37,7 @@ ORDER BY total_depense DESC;
 SELECT p.name AS produit, p.price
 FROM products p
 WHERE p.id NOT IN (
-    SELECT DISTINCT product_id FROM order_items
+    SELECT DISTINCT product_id FROM order_items WHERE product_id IS NOT NULL
 )
 ORDER BY p.name;
 

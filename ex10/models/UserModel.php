@@ -52,7 +52,7 @@ class UserModel
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch();
 
-        if (!$user || !password_verify($password, $user['password'])) {
+        if (!$user || !password_verify($password, $user['password']) || !$user['is_active']) {
             return false;
         }
 

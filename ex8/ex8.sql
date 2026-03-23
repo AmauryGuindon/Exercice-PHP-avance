@@ -46,21 +46,12 @@ GROUP BY p.id, p.name, p.stock
 ORDER BY p.name;
 
 -- 8.5 Recommandation "Les clients qui ont acheté MacBook Pro 14" (id=1) ont aussi acheté..."
-SELECT p.name                  AS produit_recommande,
-       COUNT(DISTINCT oi2.order_id) AS clients_en_commun
-FROM order_items oi1
-JOIN orders o1 ON oi1.order_id = o1.id
-JOIN order_items oi2 ON o1.user_id = (
-    SELECT o2.user_id FROM orders o2 WHERE o2.id = oi2.order_id
-)
-JOIN products p ON oi2.product_id = p.id
-WHERE oi1.product_id = 1
-  AND oi2.product_id != 1
-  AND o1.user_id IN (
-      SELECT DISTINCT o.user_id
-      FROM orders o
-      JOIN order_items oi ON o.id = oi.order_id
-      WHERE oi.product_id = 1
-  )
+SELECT p.name                         AS produit_recommande,
+       COUNT(DISTINCT o_mb.user_id)   AS clients_en_commun
+FROM orders o_mb
+JOIN order_items oi_mb  ON o_mb.id = oi_mb.order_id  AND oi_mb.product_id = 1
+JOIN orders o_other     ON o_mb.user_id = o_other.user_id
+JOIN order_items oi_other ON o_other.id = oi_other.order_id AND oi_other.product_id != 1
+JOIN products p ON oi_other.product_id = p.id
 GROUP BY p.id, p.name
 ORDER BY clients_en_commun DESC;

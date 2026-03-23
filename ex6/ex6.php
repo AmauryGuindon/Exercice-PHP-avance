@@ -10,6 +10,10 @@ require_once __DIR__ . '/../ex4/ex4.php';
 // $items = [['product_id' => X, 'quantity' => Y], ...]
 function createOrder(int $userId, array $items): int
 {
+    if (empty($items)) {
+        throw new InvalidArgumentException("La commande doit contenir au moins un article.");
+    }
+
     $pdo = Database::getInstance()->getConnection();
     $pdo->beginTransaction();
 
@@ -94,7 +98,7 @@ function authenticateUser(string $email, string $password): array|false
     $user = $stmt->fetch();
 
     // Message générique : ne révèle pas si c'est l'email ou le mot de passe qui est incorrect
-    if (!$user || !password_verify($password, $user['password'])) {
+    if (!$user || !password_verify($password, $user['password']) || !$user['is_active']) {
         return false;
     }
 

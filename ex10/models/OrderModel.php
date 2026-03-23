@@ -18,6 +18,10 @@ class OrderModel
     // $items = [['product_id' => X, 'quantity' => Y], ...]
     public function create(int $userId, array $items): int
     {
+        if (empty($items)) {
+            throw new InvalidArgumentException("La commande doit contenir au moins un article.");
+        }
+
         $this->pdo->beginTransaction();
         try {
             $totalAmount = 0.0;
@@ -109,7 +113,7 @@ class OrderModel
                     SUM(total_amount)  AS chiffre_affaires
              FROM orders
              WHERE YEAR(created_at) = :year
-               AND status = "delivered"
+               AND status = \'delivered\'
              GROUP BY MONTH(created_at)
              ORDER BY mois'
         );
